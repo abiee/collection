@@ -27,6 +27,38 @@ Finds the largest element in the collection and remove it.
 
 As we did in remove() method, removeLargest() will return the deleted object.
 
+Custom identifiers
+--------------------
+Identifiers are assigned with a generator, you can create your own generator by passing it as first argument when you create a Collection object.
+
+    function getRandomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function *randomGenerator() {
+      while (true) {
+        yield new Identifier(getRandomInt(1, 1000));
+      }
+    }
+
+    var collection = new Collection(randomGenerator());
+
+Snippet above will create random generated identifiers. Also you can create a new kind of identifier by extending the Identifier class.
+
+    class StringIdentifier extends Identifier {
+      compare(other) {
+        return this.value.localeCompare(other.value);
+      }
+    }
+
+    function *stringGenerator() {
+      while (true) {
+        yield new StringIdentifier('MyId' + getRandomInt(1, 1000));
+      }
+    }
+
+    var collection = new Collection(stringGenerator());
+
 Test the project
 --------------------
 Clone the repository and install dependencies.
